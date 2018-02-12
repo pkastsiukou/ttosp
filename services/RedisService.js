@@ -111,7 +111,7 @@ async function restoreDataOnFailure(setData = []) {
 async function printMessageFromSubscribe(pattern, channel, message) {
   if (_.includes(message, 'messages_expire_soon:')) {
     const splitData = message.split(':');
-    const messageTimeStamp = parseInt(splitData[1]);
+    const messageTimeStamp = _.parseInt(splitData[1]);
 
     const userMessage = await redis.hgetAsync(messagesMapName, messageTimeStamp);
     const executeTimeout = messageTimeStamp - new Date().getTime();
@@ -132,11 +132,14 @@ async function printMessageFromSubscribe(pattern, channel, message) {
  * @returns {boolean}
  */
 function setMessage(userMessage, timestamp) {
-  const expKeyName = `messages_expire_soon:${timestamp}`;
-  const expTime = parseInt((timestamp - new Date().getTime()) / 1000);
   redis.hset(messagesMapName, timestamp, userMessage);
   redis.sadd(messageSetName, timestamp);
-  redis.set(expKeyName, userMessage, 'EX', expTime);
+
+  const expKeyName = `messages_expire_soon:${timestamp}`;
+  const expTime = _.parseInt((timestamp - new Date().getTime()) / 1000);
+  if (expTime > 0) {
+    redis.set(expKeyName, userMessage, 'EX', expTime);
+  }
   return true;
 }
 

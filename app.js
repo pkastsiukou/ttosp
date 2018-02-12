@@ -13,7 +13,7 @@ function getTSFromUserDate(time) {
   if (isNaN(messageTimeStamp) || messageTimeStamp === 0) {
     throw new Error('Incorrect input date');
   }
-  if (messageTimeStamp < new Date().getTime()) {
+  if (messageTimeStamp < new Date().getTime() + 2000) {
     throw new Error('Message time should be future time');
   }
 

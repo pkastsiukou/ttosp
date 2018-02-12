@@ -4,7 +4,7 @@ const redis = require('../config/init.redis');
 const redisSubscriber = redis.duplicate();
 
 const messageSetName = 'message_set';
-const messagesMapName = 'message_list';
+const messagesMapName = 'message_map';
 
 
 /**

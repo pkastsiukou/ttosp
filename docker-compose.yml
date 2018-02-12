@@ -1,0 +1,15 @@
+version: "3"
+
+
+services:
+  redis:
+    image: redis:latest
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-pd:/data
+    ports:
+      - 6378:6379
+    restart: on-failure
+
+volumes:
+  redis-pd:

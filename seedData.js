@@ -3,7 +3,7 @@ const request = require('request-promise');
 (async function () {
   let i = 0;
   do {
-    const time = new Date(new Date().getTime() + 10000 + i * 1000).toISOString();
+    const time = new Date(new Date().getTime() + 2000 + i * 1000).toISOString();
     const message = `Hello ${i}`;
     const options = {
       method: 'POST',
